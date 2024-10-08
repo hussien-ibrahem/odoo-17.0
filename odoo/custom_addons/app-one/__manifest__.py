@@ -12,8 +12,13 @@
         'views/owner_view.xml',
         'security/ir.model.access.csv',
     ],
+    'assets': {
+        'web.assets_backend': [
+            'app-one/static/assets/css/property.css'
+
+        ],
+    },
     'license': 'LGPL-3',
     'installable': True,
     'application': True,
 }
-

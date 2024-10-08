@@ -4,7 +4,7 @@
         <field name="name">property tree</field>
         <field name="model">property</field>
         <field name="arch" type="xml">
-            <tree>
+            <tree class="property_table_view">
                 <field name="name"/>
                 <field name="owner_id"/>
                 <field name="state"/>
@@ -61,6 +61,7 @@
                         <group>
                             <field name="expected_price"/>
                             <field name="selling_price"/>
+                            <field name="diff"/>
                             <field name="bedrooms"/>
                             <field name="living_area"/>
                             <field name="facades"/>

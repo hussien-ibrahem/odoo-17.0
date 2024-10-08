@@ -39,6 +39,8 @@
                     <group>
                         <field name="phone"/>
                         <field name="address"/>
+                        <field name="property_ids"/>
+
                     </group>
                 </sheet>
             </form>

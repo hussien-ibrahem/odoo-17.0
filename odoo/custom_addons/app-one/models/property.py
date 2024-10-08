@@ -14,6 +14,7 @@ class Property(models.Model):
     date_availability = fields.Date()
     expected_price = fields.Float()
     selling_price = fields.Float()
+    diff = fields.Float(compute='_compute_diff')
     bedrooms = fields.Integer()
     living_area = fields.Integer()
     facades = fields.Integer()
@@ -44,6 +45,25 @@ class Property(models.Model):
             if rec.bedrooms < 0:
                 _logger.info("This is search method")
                 raise ValidationError("Please Enter Num of bedrooms")
+
+    @api.depends('expected_price', 'selling_price')
+    def _compute_diff(self):
+        for rec in self:
+            self.diff = self.expected_price - self.selling_price
+
+    @api.onchange('expected_price')
+    def onchange_expected_price_diff(self):
+        for rec in self:
+            print("Hello from Onchange Function")
+            if (rec.expected_price < rec.selling_price):
+                return {
+                    'warning': {
+                        'title': 'warning',
+                        'message': 'negative message',
+                        'type': 'notification'
+                    }
+                }
+
 
     def actoin_draft(self):
         for rec in self:
