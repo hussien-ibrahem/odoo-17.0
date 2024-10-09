@@ -7,10 +7,12 @@ _logger = logging.getLogger(__name__)
 
 class Property(models.Model):
     _name = 'property'
+    _description = "Property"
+    _inherit = ['mail.thread' , 'mail.activity.mixin']
 
     name = fields.Char(required=1)
-    description = fields.Text()
-    postcode = fields.Char()
+    description = fields.Text(tracking=1)
+    postcode = fields.Char(tracking=1)
     date_availability = fields.Date()
     expected_price = fields.Float()
     selling_price = fields.Float()
@@ -22,6 +24,8 @@ class Property(models.Model):
     garden = fields.Boolean()
     garden_area = fields.Integer()
     owner_id = fields.Many2one('owner')
+    owner_address = fields.Char(related='owner_id.address')
+    owner_phone = fields.Char(related='owner_id.phone')
     garden_orientation = fields.Selection([
         ('north', 'North'),
         ('south', 'South'),

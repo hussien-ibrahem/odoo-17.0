@@ -38,9 +38,12 @@
             <form>
                 <sheet>
                     <header>
-                        <button name ="actoin_draft" type="object" class="btn-primary" string="Save to Draft" invisible="state=='draft'"/>
-                        <button name ="actoin_pending" type="object" class="btn-secondary" string="Save to Pending" invisible="state !='draft'"/>
-                        <button name ="actoin_sold" type="object" class="btn-success" string="Save to Sold" invisible="state !='pending'"/>
+                        <button name="actoin_draft" type="object" class="btn-primary" string="Save to Draft"
+                                invisible="state=='draft'"/>
+                        <button name="actoin_pending" type="object" class="btn-secondary" string="Save to Pending"
+                                invisible="state !='draft'"/>
+                        <button name="actoin_sold" type="object" class="btn-success" string="Save to Sold"
+                                invisible="state !='pending'"/>
                         <field name="state" widget="statusbar"/>
 
                     </header>
@@ -56,6 +59,8 @@
                             <field name="postcode"/>
                             <field name="date_availability"/>
                             <field name="owner_id"/>
+                            <field name="owner_address"/>
+                            <field name="owner_phone"/>
 
                         </group>
                         <group>
@@ -73,7 +78,13 @@
                             <field name="garden_orientation"/>
                         </group>
                     </group>
+
                 </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
             </form>
         </field>
     </record>
