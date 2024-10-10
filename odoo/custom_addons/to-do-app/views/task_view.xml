@@ -1,0 +1,80 @@
+<odoo>
+
+    <record id="task_view_tree" model="ir.ui.view">
+        <field name="name">task tree</field>
+        <field name="model">task</field>
+        <field name="arch" type="xml">
+            <tree class="property_table_view">
+                <field name="name"/>
+                <field name="employee_id"/>
+                <field name="due_date"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="task_view_search" model="ir.ui.view">
+        <field name="name">task search</field>
+        <field name="model">task</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="employee_id"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="task_view_form" model="ir.ui.view">
+        <field name="name">task form</field>
+        <field name="model">task</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <header>
+                        <button name="actoin_new" type="object" class="btn-primary" string="Save to New"
+                                invisible="status=='new'"/>
+                        <button name="actoin_inprogress" type="object" class="btn-secondary" string="Save to In Progress"
+                                invisible="status !='new'"/>
+                        <button name="actoin_completed" type="object" class="btn-success" string="Save to Completed"
+                                invisible="status !='inprogress'"/>
+                        <field name="status" widget="statusbar"/>
+
+                    </header>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                            <field name="description"/>
+                            <field name="due_date"/>
+                            <field name="employee_id"/>
+
+                    </group>
+
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="task_action" model="ir.actions.act_window">
+        <field name="name">Task</field>
+        <field name="res_model">task</field>
+    </record>
+
+
+    <menuitem
+            id="task_menu_item"
+            name="Tasks"
+            parent="task_root_menu"
+            action="task_action"
+    />
+
+</odoo>

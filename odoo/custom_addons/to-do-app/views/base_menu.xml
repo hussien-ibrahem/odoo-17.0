@@ -1,0 +1,18 @@
+<odoo>
+    <menuitem
+            id="to_do_root_menu"
+            name="To Do App"
+            web_icon = "to-do-app,E:\odoo-17.0\odoo\custom_addons\to-do-app\static\description\icon.png"
+    />
+    <menuitem
+            id="task_root_menu"
+            name="Tasks"
+            parent="to_do_root_menu"
+    />
+
+    <menuitem
+            id="employee_root_menu"
+            name="Employees"
+            parent="to_do_root_menu"
+    />
+</odoo>
