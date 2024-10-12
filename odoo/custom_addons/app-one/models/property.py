@@ -17,7 +17,10 @@ class Property(models.Model):
     expected_price = fields.Float()
     selling_price = fields.Float()
     diff = fields.Float(compute='_compute_diff')
+
     bedrooms = fields.Integer()
+    line_ids = fields.One2many('property.line', 'property_id')
+
     living_area = fields.Integer()
     facades = fields.Integer()
     garage = fields.Boolean()
@@ -105,3 +108,12 @@ class Property(models.Model):
         res = super(Property, self).unlink()
         print("-----This is unlink method-----")
         return res
+
+
+
+class PropertyLine(models.Model):
+    _name = 'property.line'
+
+    property_id = fields.Many2one('property')
+    area = fields.Float()
+    description = fields.Char()
