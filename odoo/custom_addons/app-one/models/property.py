@@ -40,6 +40,7 @@ class Property(models.Model):
         ('draft', 'Draft'),
         ('pending', 'Pending'),
         ('sold', 'Sold'),
+        ('closed', 'Closed'),
     ], default='draft')
 
     _sql_constraints = [
@@ -86,6 +87,13 @@ class Property(models.Model):
         for rec in self:
             print("Hello from the \"Sold\" Function!")
             self.state = 'sold'
+
+    def actoin_closed(self):
+        for rec in self:
+            print("Hello from the \"Closed\" Function!")
+            self.state = 'closed'
+
+
 
     @api._model_create_multi
     def create(self, vals_list):
