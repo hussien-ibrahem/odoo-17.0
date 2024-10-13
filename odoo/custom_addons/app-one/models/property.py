@@ -14,6 +14,10 @@ class Property(models.Model):
     description = fields.Text(tracking=1)
     postcode = fields.Char(tracking=1)
     date_availability = fields.Date()
+
+    expected_selling_date = fields.Date()
+    is_late = fields.Boolean()
+
     expected_price = fields.Float()
     selling_price = fields.Float()
     diff = fields.Float(compute='_compute_diff')
@@ -46,6 +50,15 @@ class Property(models.Model):
     _sql_constraints = [
         ('unique_name', 'unique(name)', 'This name is exist!!')
     ]
+
+
+    def check_expected_selling_date(self):
+        property_ids = self.search([])
+        for rec in property_ids:
+            if rec.expected_selling_date and rec.expected_selling_date < fields.date.today():
+                rec.is_late = True
+        print(property_ids)
+        print("Hello from check_expected_selling_date !!!!!!!!!!!")
 
     @api.constrains('bedrooms')
     def _check_bedrooms_greater_zero(self):
