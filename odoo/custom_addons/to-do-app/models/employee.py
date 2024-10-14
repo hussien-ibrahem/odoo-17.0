@@ -6,6 +6,6 @@ class Employee(models.Model):
     name = fields.Char(required = 1)
     address = fields.Char()
     phone = fields.Char()
-    task_ids = fields.One2many('task', 'employee_id')
+    task_ids = fields.Many2many('task', 'employee_id')
 
 

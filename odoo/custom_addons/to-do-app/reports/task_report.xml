@@ -1,0 +1,110 @@
+<odoo>
+    <!-- Record for the report action -->
+    <record id="task_report" model="ir.actions.report">
+        <field name="name">Task Report</field>
+        <field name="model">task</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="binding_model_id" ref="model_task"/>
+        <field name="binding_type">report</field>
+        <field name="report_name">to-do-app.task_report_template</field>
+        <field name="report_file">to-do-app.task_report_template</field>
+    </record>
+
+    <template id="task_report_template">
+        <t t-call="web.basic_layout">
+            <t t-foreach="docs" t-as="doc">
+                <div class="page" style="padding: 20px;">
+
+                    <!-- Company Logo and Info -->
+                    <div class="row" style="text-align: center; margin-bottom: 20px;">
+                        <div class="col-12">
+                            <img src="https://i.ibb.co/znxgqj0/user-interface.png" alt="Company Logo"
+                                 style="max-height: 100px;"/>
+                            <p>Company Address: 1234 Street, City, Country</p>
+                            <p>Company Phone: +1 234 567 890</p>
+                            <p>Company Email: company@example.com</p>
+                        </div>
+                    </div>
+
+                    <!-- Task Information -->
+                    <div class="row">
+                        <div class="col-12">
+                            <h4>
+                                <strong>TASK:</strong>
+                                <span t-field="doc.name"/>
+                            </h4>
+                            <p>
+                                <strong>Due Date:</strong>
+                                <span t-field="doc.due_date"/>
+                            </p>
+                            <p>
+                                <strong>Assign To:</strong>
+                                <span t-field="doc.employee_id[0].name"/>
+                            </p>
+                            <p>
+                                <strong>Estimated Time:</strong>
+                                <span t-field="doc.estimated_time"/>
+                                H
+                            </p>
+                            <p>
+                                <strong>Description:</strong>
+                            </p>
+                            <p t-field="doc.description"/>
+                        </div>
+                    </div>
+
+                    <!-- Timesheet Table -->
+                    <div class="row">
+                        <div class="col-12">
+                            <h5>Timesheet</h5>
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Description</th>
+                                        <th>Time</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="doc.working_lines_ids" t-as="line" t-index="index">
+                                        <tr>
+                                            <td>
+                                                <span t-field="line.start_date" t-options='{"widget": "date"}'/>
+                                            </td>
+                                            <td>
+                                                <span t-field="line.description"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="line.time"/>
+                                                H
+                                            </td>
+                                        </tr>
+                                    </t>
+                                    <tr>
+                                        <td colspan="3" style="text-align: right;">
+                                            <strong>Total Time</strong>
+                                        </td>
+                                        <td>
+                                            <strong>
+                                                <span t-field="doc.total_working_hours"/>
+                                                H
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="row">
+                        <div class="col-12 text-center" style="margin-top: 20px;">
+                            <p style="font-size: 12px;">Company email, phone, register number</p>
+                            <p style="font-size: 12px;">Pagination</p>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

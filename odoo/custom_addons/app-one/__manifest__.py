@@ -13,7 +13,7 @@
         'security/ir.model.access.csv',
         'views/sale_order_view.xml',
         'views/res_partner_view.xml',
-
+        'reports/property_report.xml',
     ],
     'assets': {
         'web.assets_backend': [

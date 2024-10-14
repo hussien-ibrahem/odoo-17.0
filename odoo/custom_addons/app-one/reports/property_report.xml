@@ -1,0 +1,163 @@
+<odoo>
+    <!-- Record for the report action -->
+    <record id="property_report" model="ir.actions.report">
+        <field name="name">Property Report</field>
+        <field name="model">property</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="binding_model_id" ref="model_property"/>
+        <field name="binding_type">report</field>
+        <field name="report_name">app-one.property_report_template</field>
+        <field name="report_file">app-one.property_report_template</field> <!-- Important -->
+    </record>
+
+    <template id="property_report_template">
+        <t t-call="web.basic_layout">
+            <t t-foreach="docs" t-as="doc">
+                <div class="page" style="padding: 20px; font-family: Arial, sans-serif; color: #333;">
+
+                    <!-- Property Name -->
+                    <h1 style="font-size: 28px; text-align: center; color: #4A90E2; margin-bottom: 20px;">
+                        <t t-esc="doc.name"/>
+                    </h1>
+
+                    <div style="border-top: 2px solid #4A90E2; margin-bottom: 20px;"></div>
+
+                    <!-- Property Details Section -->
+                    <div style="margin-bottom: 30px;">
+                        <h2 style="font-size: 20px; color: #4A90E2;">Property Details</h2>
+
+                        <p>
+                            <strong>Description:</strong>
+                            <span style="color: #666;">
+                                <t t-esc="doc.description"/>
+                            </span>
+                        </p>
+                        <p>
+                            <strong>Postcode:</strong>
+                            <span style="color: #666;">
+                                <t t-esc="doc.postcode"/>
+                            </span>
+                        </p>
+                        <p>
+                            <strong>Available from:</strong>
+                            <span style="color: #666;">
+                                <t t-esc="doc.date_availability"/>
+                            </span>
+                        </p>
+                        <p>
+                            <strong>Expected Selling Date:</strong>
+                            <span style="color: #666;">
+                                <t t-esc="doc.expected_selling_date"/>
+                            </span>
+                        </p>
+                        <p>
+                            <strong>Expected Price:</strong>
+                            <span style="color: #666;">$
+                                <t t-esc="doc.expected_price"/>
+                            </span>
+                        </p>
+                        <p>
+                            <strong>Selling Price:</strong>
+                            <span style="color: #666;">$
+                                <t t-esc="doc.selling_price"/>
+                            </span>
+                        </p>
+                        <p>
+                            <strong>Difference:</strong>
+                            <span style="color: #666;">$
+                                <t t-esc="doc.diff"/>
+                            </span>
+                        </p>
+                    </div>
+
+                    <!-- Property Features Section -->
+                    <div style="margin-bottom: 30px;">
+                        <h2 style="font-size: 20px; color: #4A90E2;">Property Features</h2>
+
+                        <p>
+                            <strong>Bedrooms:</strong>
+                            <span style="color: #666;">
+                                <t t-esc="doc.bedrooms"/>
+                            </span>
+                        </p>
+                        <p>
+                            <strong>Living Area:</strong>
+                            <span style="color: #666;">
+                                <t t-esc="doc.living_area"/>
+                                sqm
+                            </span>
+                        </p>
+                        <p>
+                            <strong>Facades:</strong>
+                            <span style="color: #666;">
+                                <t t-esc="doc.facades"/>
+                            </span>
+                        </p>
+                        <p>
+                            <strong>Garage:</strong>
+                            <span style="color: #666;">
+                                <t t-esc="doc.garage and 'Yes' or 'No'"/>
+                            </span>
+                        </p>
+                        <p>
+                            <strong>Garden:</strong>
+                            <span style="color: #666;">
+                                <t t-esc="doc.garden and 'Yes' or 'No'"/>
+                            </span>
+                        </p>
+                        <p>
+                            <strong>Garden Area:</strong>
+                            <span style="color: #666;">
+                                <t t-esc="doc.garden_area"/>
+                                sqm
+                            </span>
+                        </p>
+                        <p>
+                            <strong>Garden Orientation:</strong>
+                            <span style="color: #666;">
+                                <t t-esc="doc.garden_orientation"/>
+                            </span>
+                        </p>
+                    </div>
+
+                    <!-- Owner Information Section -->
+                    <div style="margin-bottom: 30px;">
+                        <h2 style="font-size: 20px; color: #4A90E2;">Owner Information</h2>
+
+                        <p>
+                            <strong>Owner:</strong>
+                            <span style="color: #666;">
+                                <t t-esc="doc.owner_id.name"/>
+                            </span>
+                        </p>
+                        <p>
+                            <strong>Address:</strong>
+                            <span style="color: #666;">
+                                <t t-esc="doc.owner_address"/>
+                            </span>
+                        </p>
+                        <p>
+                            <strong>Phone:</strong>
+                            <span style="color: #666;">
+                                <t t-esc="doc.owner_phone"/>
+                            </span>
+                        </p>
+                    </div>
+
+                    <!-- Property Status Section -->
+                    <div style="margin-bottom: 20px;">
+                        <h2 style="font-size: 20px; color: #4A90E2;">Property Status</h2>
+
+                        <p>
+                            <strong>Status:</strong>
+                            <span style="color: #666;">
+                                <t t-esc="doc.state"/>
+                            </span>
+                        </p>
+                    </div>
+
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

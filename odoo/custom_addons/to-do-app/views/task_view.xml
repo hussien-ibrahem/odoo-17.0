@@ -4,10 +4,12 @@
         <field name="name">task tree</field>
         <field name="model">task</field>
         <field name="arch" type="xml">
-            <tree class="property_table_view">
+            <tree class="property_table_view" decoration-danger="(is_late)">
                 <field name="name"/>
                 <field name="employee_id"/>
                 <field name="due_date"/>
+                <field name="status"/>
+                <field name="is_late" invisible="1" optional="1"/>
             </tree>
         </field>
     </record>
@@ -33,7 +35,8 @@
                     <header>
                         <button name="actoin_new" type="object" class="btn-primary" string="Save to New"
                                 invisible="status=='new'"/>
-                        <button name="actoin_inprogress" type="object" class="btn-secondary" string="Save to In Progress"
+                        <button name="actoin_inprogress" type="object" class="btn-secondary"
+                                string="Save to In Progress"
                                 invisible="status !='new'"/>
                         <button name="actoin_completed" type="object" class="btn-success" string="Save to Completed"
                                 invisible="status !='inprogress'"/>
@@ -47,11 +50,30 @@
                         </h1>
                     </div>
                     <group>
-                            <field name="description"/>
-                            <field name="due_date"/>
-                            <field name="employee_id"/>
+                        <field name="description"/>
+                        <field name="due_date"/>
+                        <field name="employee_id"/>
+                        <field name="estimated_time"/>
+                        <field name="total_working_hours"/>
+                        <field name="active" invisible='1'/>
 
                     </group>
+
+
+                    <notebook>
+                        <page name="Time Sheet">
+                            <field name="working_lines_ids">
+                                <tree editable="bottom">
+                                    <field name="start_date"/>
+                                    <field name="description"/>
+                                    <field name="time" string="Time (Hours)"/>
+                                    <field name="end_date"/>
+                                </tree>
+
+                            </field>
+                        </page>
+                    </notebook>
+
 
                 </sheet>
                 <div class="oe_chatter">
@@ -60,6 +82,17 @@
                     <field name="message_ids"/>
                 </div>
             </form>
+        </field>
+    </record>
+
+
+    <record id="task_complete_server_action" model="ir.actions.server">
+        <field name="name">Complete</field>
+        <field name="model_id" ref="model_task"/>
+        <field name="binding_model_id" ref="model_task"/>
+        <field name="state">code</field>
+        <field name="code">
+            action = records.actoin_completed()
         </field>
     </record>
 

@@ -11,6 +11,7 @@
         'views/task_view.xml',
         'views/employee_view.xml',
         'security/ir.model.access.csv',
+        'reports/task_report.xml',
     ],
     'assets': {
         'web.assets_backend': [

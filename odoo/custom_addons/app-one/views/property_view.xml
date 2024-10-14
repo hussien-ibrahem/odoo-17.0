@@ -102,6 +102,7 @@
         </field>
     </record>
 
+
     <record id="property_closed_server_action" model="ir.actions.server">
         <field name="name">Closed</field>
         <field name="model_id" ref="model_property"/>
