@@ -2,4 +2,5 @@ id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_property,access_property,model_property,,1,1,1,1
 access_owner,access_owner,model_owner,,1,1,1,1
 access_property_line,access_property_line,model_property_line,,1,1,1,1
-access_property_line,access_property_line,model_property_line,,1,1,1,1
+access_property_history,access_property_history,model_property_history,,1,1,1,1
+access_change_state,access_change_state,model_change_state,,1,1,1,1

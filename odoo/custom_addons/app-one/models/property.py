@@ -11,6 +11,7 @@ class Property(models.Model):
     _inherit = ['mail.thread' , 'mail.activity.mixin']
 
     name = fields.Char(required=1)
+    ref = fields.Char(default='New', readonly=1)
     description = fields.Text(tracking=1)
     postcode = fields.Char(tracking=1)
     date_availability = fields.Date()
@@ -52,6 +53,16 @@ class Property(models.Model):
     ]
 
 
+    def create_history_property_record(self , old_state , new_state , reason):
+        for rec in self:
+            rec.env['property.history'].create({
+                'user_id' : rec.env.uid,
+                'property_id' : rec.id,
+                'old_state' : old_state,
+                'new_state' : new_state,
+                'reason' : reason or "",
+            })
+
     def check_expected_selling_date(self):
         property_ids = self.search([])
         for rec in property_ids:
@@ -88,29 +99,38 @@ class Property(models.Model):
 
     def actoin_draft(self):
         for rec in self:
+            rec.create_history_property_record(rec.state , 'draft', "")
             print("Hello from the \"Draft\" Function!")
             self.state = 'draft'
 
     def actoin_pending(self):
         for rec in self:
+            rec.create_history_property_record(rec.state , 'pending' , "")
             print("Hello from the \"Pending\" Function!")
             self.state = 'pending'
 
     def actoin_sold(self):
         for rec in self:
+            rec.create_history_property_record(rec.state , 'sold', "")
             print("Hello from the \"Sold\" Function!")
             self.state = 'sold'
 
     def actoin_closed(self):
         for rec in self:
+            rec.create_history_property_record(rec.state , 'closed', "")
             print("Hello from the \"Closed\" Function!")
             self.state = 'closed'
 
-
+    def actoin_open_closed_wizard(self):
+        action = self.env['ir.actions.actions']._for_xml_id('app-one.property_change_state_action')
+        action['context'] = {'default_property_id': self.id}
+        return action
 
     @api._model_create_multi
     def create(self, vals_list):
         res = super(Property, self).create(vals_list)
+        if res.ref == 'New':
+            res.ref = self.env['ir.sequence'].next_by_code('property_seq')
         print("-----This is create method-----")
         return res
 
@@ -129,6 +149,7 @@ class Property(models.Model):
         res = super(Property, self).unlink()
         print("-----This is unlink method-----")
         return res
+
 
 
 

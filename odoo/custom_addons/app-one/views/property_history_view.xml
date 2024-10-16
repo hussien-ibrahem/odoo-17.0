@@ -1,0 +1,68 @@
+<odoo>
+
+    <record id="property_history_view_tree" model="ir.ui.view">
+        <field name="name">property history tree</field>
+        <field name="model">property.history</field>
+        <field name="arch" type="xml">
+            <tree class="property_history_table_view" create="0" edit="0" delete="0">
+                <field name="user_id"/>
+                <field name="property_id"/>
+                <field name="old_state"/>
+                <field name="new_state"/>
+                <field name="reason"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="property_history_view_search" model="ir.ui.view">
+        <field name="name">property History search</field>
+        <field name="model">property.history</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="user_id"/>
+                <field name="property_id"/>
+
+            </search>
+        </field>
+    </record>
+
+    <record id="property_history_view_form" model="ir.ui.view">
+        <field name="name">property history form</field>
+        <field name="model">property.history</field>
+        <field name="arch" type="xml">
+            <form create="0" edit="0" delete="0">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="user_id"/>
+                            <field name="property_id"/>
+                        </group>
+                        <group>
+                            <field name="old_state"/>
+                            <field name="new_state"/>
+                        </group>
+                    </group>
+                </sheet>
+
+            </form>
+        </field>
+    </record>
+
+
+
+
+    <record id="property_history_action" model="ir.actions.act_window">
+        <field name="name">Property History</field>
+        <field name="res_model">property.history</field>
+    </record>
+
+
+    <menuitem
+            id="property_history_menu_item"
+            name="History"
+            parent="property_root_menu"
+            action="property_history_action"
+    />
+
+</odoo>
