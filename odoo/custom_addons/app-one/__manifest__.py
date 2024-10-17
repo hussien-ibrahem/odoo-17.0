@@ -7,6 +7,7 @@
     'version': '17.0.0.1.0',
     'depends': ['base','sale_management','mail' , 'contacts'],
     'data': [
+        'security/security.xml',
         'security/ir.model.access.csv',
         'data/sequence.xml',
         'views/base_menu.xml',
