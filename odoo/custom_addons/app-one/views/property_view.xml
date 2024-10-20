@@ -13,6 +13,7 @@
                 <field name="state"/>
                 <field name="expected_price"/>
                 <field name="selling_price"/>
+                <field name="active"/>
                 <field name="garage" optional="1"/>
                 <field name="garden_area" optional="1"/>
                 <field name="is_late" invisible="1" optional="1"/>
@@ -39,6 +40,20 @@
         <field name="arch" type="xml">
             <form>
                 <sheet>
+
+
+<!--                    Can't run it           -->
+
+
+
+<!--                    <div name="button_box" class="oe_button_box">-->
+<!--                        <button name="open_owner_record" type="object" icon="" string="Owner"-->
+<!--                                invisible="not owner_id"/>-->
+<!--                    </div>-->
+
+
+                    <widget name="web_ribbon" title="Archieved" bg_color="text-bg-danger" invisible="active"/>
+
                     <header>
                         <button name="actoin_draft" type="object" class="btn-primary" string="Save to Draft"
                                 invisible="state in ('draft','closed')"/>
@@ -83,6 +98,7 @@
                             <field name="garden"/>
                             <field name="garden_area"/>
                             <field name="garden_orientation"/>
+                            <field name="active"/>
                         </group>
                     </group>
 
@@ -92,6 +108,7 @@
                                 <tree editable="bottom">
                                     <field name="description"/>
                                     <field name="area"/>
+
                                 </tree>
                             </field>
                         </page>
@@ -118,7 +135,7 @@
     </record>
 
 
-        <record id="property_change_state_server_action" model="ir.actions.server">
+    <record id="property_change_state_server_action" model="ir.actions.server">
         <field name="name">Change State</field>
         <field name="model_id" ref="model_property"/>
         <field name="binding_model_id" ref="model_property"/>

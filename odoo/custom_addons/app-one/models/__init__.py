@@ -7,3 +7,4 @@ from . import owner
 from . import sale_order
 from . import res_partner
 from . import property_history
+from . import account_move

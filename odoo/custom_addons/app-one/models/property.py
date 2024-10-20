@@ -10,6 +10,8 @@ class Property(models.Model):
     _description = "Property"
     _inherit = ['mail.thread' , 'mail.activity.mixin']
 
+    active = fields.Boolean()
+
     name = fields.Char(required=1)
     ref = fields.Char(default='New', readonly=1)
     description = fields.Text(tracking=1)
@@ -52,6 +54,14 @@ class Property(models.Model):
         ('unique_name', 'unique(name)', 'This name is exist!!')
     ]
 
+
+    # @api.one
+    # def open_owner_record(self):
+    #     # owner_id = self.owner_id.id
+    #     # action = self.env['ir.actions.actions']._for_xml_id('app-one.owner_action')
+    #     # action['context'] = {'default_owner_id': owner_id}
+    #     # return action
+    #     print("hello")
 
     def create_history_property_record(self , old_state , new_state , reason):
         for rec in self:
