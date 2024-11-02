@@ -60,12 +60,10 @@ class PropertyApi(http.Controller):
 
         except Exception as error:
             return request.make_json_response({
-<<<<<<< HEAD
                 "message": "---Error occured while Deleting record ---",
-=======
-                "message": "---Error occured while Deleting record  ---",
->>>>>>> ef18c291270151c001a3a52b3d6551fe0b3b67e7
             }, status=400)
+
+
 
     @http.route("/v1/property/<int:property_id>", methods=["GET"], type="http", auth="none", csrf=False)
     def get_property(self,property_id):
