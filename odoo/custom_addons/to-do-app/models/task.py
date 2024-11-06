@@ -1,5 +1,7 @@
+from importlib.resources._common import _
+
 from odoo import models, fields, api
-from odoo.exceptions import ValidationError
+from odoo.exceptions import ValidationError, UserError
 from datetime import timedelta
 import logging
 
@@ -43,8 +45,8 @@ class Task(models.Model):
             if rec.due_date and rec.due_date < fields.date.today():
                 rec.is_late = True
                 rec.activity_schedule(
-                    'mail.mail_activity_data_todo',  # نوع الـ activity (تقدر تغييره حسب احتياجك)
-                    user_id=self.env.user.id,  # المستخدم المستهدف (ممكن تغير الحقل ده)
+                    'mail.mail_activity_data_todo',
+                    user_id=self.env.user.id,
                     summary='Task is overdue!',
                     note=f'The task {rec.name} is overdue. Please take action.',
                 )
@@ -107,10 +109,20 @@ class Task(models.Model):
         print("This is search method Task")
         return res
 
+    # def write(self, vals):
+    #     res = super(Task, self).write(vals)
+    #     print("This is Update method Task")
+    #     print("Assign Task !!!!!!!!!!!!!!!!!!!")
+    #     return res
     def write(self, vals):
+        for task in self:
+            print(f"Updating task {task.id}")
+            print(f"Assigning employees {self.employee_id.ids}")
+            print(f"Vals:  {vals} ")
+
         res = super(Task, self).write(vals)
-        print("This is Update method Task")
         return res
+
 
     def unlink(self):
         res = super(Task, self).unlink()
@@ -118,12 +130,19 @@ class Task(models.Model):
         return res
 
 
+    # def action_assign_task_wizard(self):
+    #     action = self.env['ir.actions.actions']._for_xml_id('to-do-app.assign_tasks_action')
+    #     action['context'] = {'default_task_id': self.id}
+    #     return action
+
+
     def action_assign_task_wizard(self):
+        selected_task_ids = self.env.context.get('active_ids', [])
         action = self.env['ir.actions.actions']._for_xml_id('to-do-app.assign_tasks_action')
-        action['context'] = {'default_task_id': self.id}
+        action['context'] = {
+            'default_task_id': [(6, 0, selected_task_ids)]  # Assign selected tasks
+        }
         return action
-
-
 
 
 class WorkingLines(models.Model):
@@ -131,7 +150,7 @@ class WorkingLines(models.Model):
 
     description = fields.Text()
     start_date = fields.Datetime(required = 1)
-    time = fields.Float()  # Assuming it's in hours
+    time = fields.Float()
     end_date = fields.Datetime(compute='_compute_end_date', store=True)
     task_id = fields.Many2one('task')
 
