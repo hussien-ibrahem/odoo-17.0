@@ -14,6 +14,7 @@ class Task(models.Model):
     active = fields.Boolean(default=True)
 
     name = fields.Char()
+    ref = fields.Char(default='xxx', readonly=1)
     description = fields.Text()
     due_date = fields.Date()
     is_late = fields.Boolean()
@@ -95,6 +96,8 @@ class Task(models.Model):
     @api._model_create_multi
     def create(self, vals_list):
         res = super(Task, self).create(vals_list)
+        if res.ref == 'xxx':
+            res.ref = self.env['ir.sequence'].next_by_code('task_seq')
         print("-----This is create method Task-----")
         return res
 
@@ -114,6 +117,11 @@ class Task(models.Model):
         print("-----This is unlink method Task-----")
         return res
 
+
+    def action_assign_task_wizard(self):
+        action = self.env['ir.actions.actions']._for_xml_id('to-do-app.assign_tasks_action')
+        action['context'] = {'default_task_id': self.id}
+        return action
 
 
 
@@ -144,3 +152,4 @@ class WorkingLines(models.Model):
                 if total_recorded_hours > task.estimated_time:
                     print(f"total_recorded_hours : {total_recorded_hours} \n rec.time : {rec.time} \n task.estimated_time : {task.estimated_time}")
                     raise ValidationError("Total working hours exceed the estimated time for the task!")
+

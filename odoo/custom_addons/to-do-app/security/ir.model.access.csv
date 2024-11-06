@@ -2,3 +2,4 @@ id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_task,access_task,model_task,,1,1,1,1
 access_employee,access_employee,model_employee,,1,1,1,1
 access_working_lines,access_working_lines,model_working_lines,,1,1,1,1
+access_assign_tasks,access_assign_tasks,model_assign_tasks,,1,1,1,1

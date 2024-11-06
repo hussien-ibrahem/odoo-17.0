@@ -161,8 +161,6 @@ class Property(models.Model):
         return res
 
 
-
-
 class PropertyLine(models.Model):
     _name = 'property.line'
 

@@ -1,0 +1,36 @@
+<odoo>
+
+    <record id="assign_tasks_view_form" model="ir.ui.view">
+        <field name="name">Assign tasks to users</field>
+        <field name="model">assign.tasks</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="task_id" />
+                    <field name="employee_id" />
+                </group>
+                <footer>
+                    <button string="Confirm" type="object" name="assign_task" class="btn-primary"/>
+                    <button string="Cancel" special="cancel" class="btn-secondary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="assign_tasks_action" model="ir.actions.act_window">
+        <field name="name">Assign Tasks</field>
+        <field name="res_model">assign.tasks</field>
+        <field name="target">new</field>
+        <field name="view_mode">form</field>
+    </record>
+
+
+    <menuitem
+            id="assign_tasks_to_employee_menu_item"
+            name="Assign Tasks"
+            parent="task_root_menu"
+            action="assign_tasks_action"
+    />
+
+</odoo>

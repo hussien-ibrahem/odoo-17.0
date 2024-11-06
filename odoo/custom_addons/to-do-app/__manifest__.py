@@ -10,6 +10,8 @@
         'views/base_menu.xml',
         'views/task_view.xml',
         'views/employee_view.xml',
+        'data/sequence.xml',
+        'wizard/assign_tasks_to_employees_wizard_view.xml',
         'security/ir.model.access.csv',
         'reports/task_report.xml',
     ],

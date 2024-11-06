@@ -5,6 +5,7 @@
         <field name="model">task</field>
         <field name="arch" type="xml">
             <tree class="property_table_view" decoration-danger="(is_late)">
+                <field name="ref"/>
                 <field name="name"/>
                 <field name="employee_id"/>
                 <field name="due_date"/>
@@ -49,6 +50,14 @@
                             <field name="name"/>
                         </h1>
                     </div>
+
+                    <div class="oe_title">
+                        <label for="ref"/>
+                        <h1>
+                            <field name="ref"/>
+                        </h1>
+                    </div>
+
                     <group>
                         <field name="description"/>
                         <field name="due_date"/>
@@ -93,6 +102,16 @@
         <field name="state">code</field>
         <field name="code">
             action = records.actoin_completed()
+        </field>
+    </record>
+
+    <record id="assign_task_server_action" model="ir.actions.server">
+        <field name="name">Assign Task</field>
+        <field name="model_id" ref="model_assign_tasks"/>
+        <field name="binding_model_id" ref="model_assign_tasks"/>
+        <field name="state">code</field>
+        <field name="code">
+            action = records.action_assign_task_wizard()
         </field>
     </record>
 
